@@ -169,7 +169,7 @@ export default Vue.extend({
       //this.cueVideoById();
     },
     ended(e: any) {
-      this.player.seekTo(20);
+      this.player.seekTo(this.start);
     },
     error(e: any) {
       console.log("error", e);

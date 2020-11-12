@@ -5,15 +5,13 @@ export const toSecond = (HHMMSS: string): number => {
   let m = 1;
 
   while (p.length > 0) {
-    const o: string | undefined = p.pop();
-    if (!!o) {
-      s += m * parseInt(o, 10);
-      m *= 60;
-    }
+    const o: any = p.pop();
+
+    s += m * parseInt(o, 10);
+    m *= 60;
   }
   return s;
 };
-
 //export const toHHMMSS = (sec: string): string => {
 //  const secNum = parseInt(sec, 10);
 //  const hour = Math.floor(secNum / 3600) % 24;

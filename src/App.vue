@@ -61,7 +61,7 @@ export default Vue.extend({
       { name: "description", content: "A description of the page", id: "desc" }, // id to replace intead of create element
       // ...
       // Twitter
-      { name: "twitter:title", content: "Content Title" },
+      { name: "twitter:title", content: "!!Content Title" },
       // with shorthand
       {
         n: "twitter:description",

@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: "/vue-cli-vue-head-test/",
+  publicPath: "/loop-youtube/",
   outputDir: "docs"
 };
 

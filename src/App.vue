@@ -105,7 +105,7 @@ export default Vue.extend({
       // ...
     ]*/
   },
-
+  //https://loop-youtube.netlify.app/?v=WIUH0lhsbL0&s=00:20&e=00:30
   created() {
     //const params = location.pathname.split("/");
 

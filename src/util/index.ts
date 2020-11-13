@@ -12,6 +12,25 @@ export const toSecond = (HHMMSS: string): number => {
   }
   return s;
 };
+
+export const getParam = sname => {
+  const param = location.search.substr(location.search.indexOf("?") + 1);
+
+  let sval = "";
+
+  const params = param.split("&");
+
+  for (let i = 0; i < params.length; i++) {
+    const temp = params[i].split("=");
+
+    if ([temp[0]] == sname) {
+      sval = temp[1];
+    }
+  }
+
+  return sval;
+};
+
 //export const toHHMMSS = (sec: string): string => {
 //  const secNum = parseInt(sec, 10);
 //  const hour = Math.floor(secNum / 3600) % 24;

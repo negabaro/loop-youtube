@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue from "vue";
 import VueYoutube from "vue-youtube";
-import { toSecond } from "@/util/index";
+import { toSecond, getParam } from "@/util/index";
 import VueHead from "vue-head";
 
 //let YouTubeIframeLoader = require("youtube-iframe");
@@ -36,7 +36,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      title: "My Title",
+      title: "My Title22",
+      description: "sdsdsdsdsd",
       videoId: "",
       start: 0,
       end: 0,
@@ -56,6 +57,21 @@ export default Vue.extend({
         inner: (this as any).title
       };
     },
+    meta: function() {
+      return [
+        { property: "og:title", content: (this as any).title + " | subtitle" },
+        { property: "og:description", content: (this as any).description },
+        {
+          p: "og:image",
+          c: (this as any).img
+        },
+        { property: "og:image:type", content: "image/gif" },
+        { property: "og:image:width", content: "500" },
+        { property: "og:image:height", content: "376" }
+        // ...
+      ];
+    }
+    /*
     meta: [
       { name: "application-name", content: "Name of my application" },
       { name: "description", content: "A description of the page", id: "desc" }, // id to replace intead of create element
@@ -87,23 +103,24 @@ export default Vue.extend({
       { property: "og:image:width", content: "500" },
       { property: "og:image:height", content: "376" }
       // ...
-    ]
+    ]*/
   },
 
   created() {
-    const params = location.pathname.split("/");
-    console.log("xxxxxx params", params);
+    //const params = location.pathname.split("/");
 
-    this.videoId = params[1];
-    console.log("this.videoId", this.videoId);
-    this.start = toSecond(params[2]);
-    this.end = toSecond(params[3]);
+    this.videoId = getParam("v");
+    this.start = toSecond(getParam("s"));
+    this.end = toSecond(getParam("e"));
 
     //this.loadVideoById();
 
     //console.log(location.pathname.split("/"));
   },
   computed: {
+    img(): string {
+      return `https://i.ytimg.com/vi/${this.videoId}/mqdefault.jpg`;
+    },
     playerVars(): any {
       return {
         autoplay: 1,
@@ -128,7 +145,7 @@ export default Vue.extend({
     //},
     player(): any {
       const youtube: any = this.$refs.youtube;
-      console.log("xxxxx youtube", youtube);
+      //console.log("xxxxx youtube", youtube);
       return youtube.player;
     }
   },
@@ -153,26 +170,26 @@ export default Vue.extend({
       this.player.playVideo();
     },
     loadVideoById() {
-      console.log("loadVideoById this.player", this.player);
-      console.log("loadVideoById this.player", this.videoId);
+      //console.log("loadVideoById this.player", this.player);
+      //console.log("loadVideoById this.player", this.videoId);
       //this.player.loadVideoById({
       //  videoId: this.videoId,
       //  startSeconds: 20,
       //  endSeconds: 30
       //});
     },
-    ready(e: any) {
-      console.log("ready");
-      console.log("ready this.player", this.player);
+    ready() {
+      //console.log("ready");
+      //console.log("ready this.player", this.player);
       this.playVideo();
       //this.loadVideoById();
       //this.cueVideoById();
     },
-    ended(e: any) {
+    ended() {
       this.player.seekTo(this.start);
     },
     error(e: any) {
-      console.log("error", e);
+      //console.log("error", e);
     }
   }
 });

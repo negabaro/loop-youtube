@@ -60,6 +60,7 @@ export default Vue.extend({
     },
     meta: function() {
       return [
+        { property: "og:site_name", content: (this as any).title },
         { property: "og:title", content: (this as any).metaTitle },
         { property: "og:description", content: (this as any).description },
         {

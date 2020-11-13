@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <h1>22xxxxxxxxxxxx</h1>
+      <h1>{{this.description}}</h1>
       <!-- <div id="player" /> -->
       <div v-if="isParams">
         <youtube
@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue from "vue";
 import VueYoutube from "vue-youtube";
-import { toSecond, getParam } from "@/util/index";
+import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import VueHead from "vue-head";
 
 //let YouTubeIframeLoader = require("youtube-iframe");
@@ -36,9 +36,10 @@ export default Vue.extend({
   },
   data() {
     return {
-      title: "My Title22",
-      description: "sdsdsdsdsd",
+      title: "Loop Youtube",
+      //description: "sdsdsdsdsd",
       videoId: "",
+      word: "",
       start: 0,
       end: 0,
       duration: 0,
@@ -54,12 +55,12 @@ export default Vue.extend({
   head: {
     title: function() {
       return {
-        inner: (this as any).title
+        inner: (this as any).metaTitle
       };
     },
     meta: function() {
       return [
-        { property: "og:title", content: (this as any).title + " | subtitle" },
+        { property: "og:title", content: (this as any).metaTitle },
         { property: "og:description", content: (this as any).description },
         {
           p: "og:image",
@@ -112,12 +113,25 @@ export default Vue.extend({
     this.videoId = getParam("v");
     this.start = toSecond(getParam("s"));
     this.end = toSecond(getParam("e"));
+    this.word = getParam("w");
 
+    console.log("xx this.word", this.word);
     //this.loadVideoById();
 
     //console.log(location.pathname.split("/"));
   },
   computed: {
+    metaTitle(): string {
+      return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
+    },
+    decodedWord(): string {
+      return decodeURIComponent(this.word);
+    },
+    description(): string {
+      return `${this.decodedWord} | ${toHHMMSS(this.start)}~${toHHMMSS(
+        this.end
+      )}`;
+    },
     img(): string {
       return `https://i.ytimg.com/vi/${this.videoId}/mqdefault.jpg`;
     },
@@ -145,7 +159,10 @@ export default Vue.extend({
     //},
     player(): any {
       const youtube: any = this.$refs.youtube;
-      //console.log("xxxxx youtube", youtube);
+      //console.log("this.$refs.youtube", this.$refs.youtube);
+      console.log("xxxxx jjjjjjjj", this.$refs.j);
+      console.log("xxxxx videoData", this.$refs.videoData);
+
       return youtube.player;
     }
   },
@@ -178,9 +195,21 @@ export default Vue.extend({
       //  endSeconds: 30
       //});
     },
-    ready() {
-      //console.log("ready");
-      //console.log("ready this.player", this.player);
+    async ready() {
+      console.log("ready this.player", this.player);
+      console.log("ready this.player getVideoData", this.player.getVideoData);
+
+      console.log(
+        "ready this.player getDuration",
+        await this.player.getDuration()
+      );
+
+      const playerDom = await this.player.getIframe();
+      console.log("playerDom", playerDom);
+      console.log(
+        "ready this.player getIframe",
+        playerDom.querySelector("iframe")
+      );
       this.playVideo();
       //this.loadVideoById();
       //this.cueVideoById();

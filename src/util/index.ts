@@ -31,13 +31,13 @@ export const getParam = sname => {
   return sval;
 };
 
-//export const toHHMMSS = (sec: string): string => {
-//  const secNum = parseInt(sec, 10);
-//  const hour = Math.floor(secNum / 3600) % 24;
-//  const minute = Math.floor(secNum / 60) % 60;
-//  const second = secNum % 60;
-//  return [hour, minute, second]
-//    .map(v => (v < 10 ? "0" + v : v))
-//    .filter((v, i) => v !== "00" || i > 0)
-//    .join(":");
-//};
+export const toHHMMSS = (sec: any): string => {
+  const secNum = parseInt(sec, 10);
+  const hour = Math.floor(secNum / 3600) % 24;
+  const minute = Math.floor(secNum / 60) % 60;
+  const second = secNum % 60;
+  return [hour, minute, second]
+    .map(v => (v < 10 ? "0" + v : v))
+    .filter((v, i) => v !== "00" || i > 0)
+    .join(":");
+};

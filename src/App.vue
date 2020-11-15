@@ -5,6 +5,8 @@
       <!-- <div id="player" /> -->
       <div v-if="isParams">
         <youtube
+          fitParent=true
+          resize=true
           :video-id="videoId"
           :player-vars="playerVars"
           @ready="ready"

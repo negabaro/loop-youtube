@@ -5,11 +5,12 @@
       <!-- <div id="player" /> -->
       <div v-if="isParams">
         <youtube
-          fitParent=true
-          resize=true
+          :fitParent="fitParentStatus"
+          :resize="resizeStatus"
           :video-id="videoId"
           :player-vars="playerVars"
           @ready="ready"
+          @playing="playing"
           @ended="ended"
           @error="error"
           ref="youtube"
@@ -38,6 +39,8 @@ export default Vue.extend({
   },
   data() {
     return {
+      fitParentStatus: true,
+      resizeStatus: true,
       title: "Loop Youtube",
       //description: "sdsdsdsdsd",
       videoId: "",
@@ -123,7 +126,16 @@ export default Vue.extend({
 
     //console.log(location.pathname.split("/"));
   },
+  mounted() {
+    this.player.addEventListener(
+      "onStateChange",
+      (this as any).youtubStateChange
+    );
+  },
   computed: {
+    loopTrigerMilliSecond(): number {
+      return (this.end - this.start) * 1000;
+    },
     metaTitle(): string {
       return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
     },
@@ -186,6 +198,16 @@ export default Vue.extend({
     //    endSeconds: 30
     //  });
     //},
+    youtubStateChange(youtubeState: object) {
+      console.log("youtubeState:", youtubeState);
+    },
+    seekTo() {
+      this.player.seekTo(this.start);
+    },
+    playing() {
+      console.log("playing", this.loopTrigerMilliSecond);
+      setTimeout(this.seekTo, this.loopTrigerMilliSecond);
+    },
     playVideo() {
       this.player.playVideo();
     },
@@ -218,7 +240,8 @@ export default Vue.extend({
       //this.cueVideoById();
     },
     ended() {
-      this.player.seekTo(this.start);
+      //console.log("ended");
+      //this.player.seekTo(this.start);
     },
     error(e: any) {
       //console.log("error", e);
@@ -227,6 +250,11 @@ export default Vue.extend({
 });
 </script>
 <style>
+iframe {
+  width: 100%;
+  max-width: 800px; /* Also helpful. Optional. */
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

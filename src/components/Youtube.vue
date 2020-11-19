@@ -31,7 +31,7 @@
       :player-vars="playerVars"
       @ready="ready"
       @playing="playing"
-      @end="end"
+      @ended="ended"
       ref="youtube"
     />
     <!-- 
@@ -74,7 +74,7 @@ import Vue from "vue";
 import VueYoutube from "vue-youtube";
 Vue.use(VueYoutube);
 
-import { toSecond, toHHMMSS, getParam } from "@/util/index";
+//import { toSecond, toHHMMSS, getParam } from "@/util/index";
 export default Vue.extend({
   //name: "youtube",
   props: {
@@ -124,7 +124,7 @@ export default Vue.extend({
     playing(): void {
       //setTimeout(this.seekTo, this.loopTrigerMilliSecond);
     },
-    end() {
+    ended() {
       this.seekTo();
     },
     seekTo(): void {

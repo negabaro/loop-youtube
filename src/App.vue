@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-
-    <div v-if="isParams">
+    <router-view />
+    <!-- <div v-if="isParams">
       <Youtube
         :start="start"
         :end="end"
@@ -11,7 +11,7 @@
     </div>
     <div v-else>
       <GenerateUrl />
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
@@ -20,29 +20,35 @@ import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import VueHead from "vue-head";
 import GenerateUrl from "@/components/GenerateUrl.vue";
 import Youtube from "@/components/Youtube.vue";
+import {
+  SET_VIDEO_ID,
+  SET_WORD,
+  SET_START_TIME,
+  SET_END_TIME
+} from "@/store/Video/mutations";
 
 Vue.use(VueHead);
 
-export type DataType = {
-  title: string;
-  videoId: string;
-  word: string;
-  start: number;
-  end: number;
-};
+//export type DataType = {
+//  title: string;
+//  videoId: string;
+//  word: string;
+//  start: number;
+//  end: number;
+//};
 
 export default Vue.extend({
   components: {
-    GenerateUrl,
-    Youtube
+    //GenerateUrl,
+    //Youtube
   },
-  data(): DataType {
+  data() {
     return {
-      title: "Loop Youtube",
-      videoId: "",
-      word: "",
-      start: 0,
-      end: 0
+      title: "Loop Youtube"
+      //videoId: "",
+      //word: "",
+      //start: 0,
+      //end: 0
     };
   },
   head: {
@@ -102,12 +108,28 @@ export default Vue.extend({
   },
   //https://loop-youtube.netlify.app/?v=WIUH0lhsbL0&s=00:20&e=00:30
   created() {
-    this.videoId = getParam("v");
-    this.start = toSecond(getParam("s"));
-    this.end = toSecond(getParam("e"));
-    this.word = getParam("w");
+    this.$store.commit(`video/${SET_VIDEO_ID}`, getParam("v"));
+    //this.videoId = getParam("v");
+    this.$store.commit(`video/${SET_START_TIME}`, toSecond(getParam("s")));
+    //this.start = toSecond(getParam("s"));
+    this.$store.commit(`video/${SET_END_TIME}`, toSecond(getParam("e")));
+    //this.end = toSecond(getParam("e"));
+    this.$store.commit(`video/${SET_WORD}`, toSecond(getParam("w")));
+    //this.word = getParam("w");
   },
   computed: {
+    videoId(): string {
+      return this.$store.getters["video/getVideoId"];
+    },
+    start(): number {
+      return this.$store.getters["video/getStartTime"];
+    },
+    end(): number {
+      return this.$store.getters["video/getEndTime"];
+    },
+    word(): string {
+      return this.$store.getters["video/getWordTime"];
+    },
     metaTitle(): string {
       if (this.isParams) {
         return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;

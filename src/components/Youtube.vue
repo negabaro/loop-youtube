@@ -77,12 +77,12 @@ Vue.use(VueYoutube);
 //import { toSecond, toHHMMSS, getParam } from "@/util/index";
 export default Vue.extend({
   //name: "youtube",
-  props: {
-    videoId: String,
-    start: Number,
-    end: Number,
-    word: String
-  },
+  //props: {
+  //  videoId: String,
+  //  start: Number,
+  //  end: Number,
+  //  word: String
+  //},
   data() {
     return {
       fitParentStatus: true,
@@ -96,6 +96,18 @@ export default Vue.extend({
     //(this as any).videoId = getParam("v");
   },
   computed: {
+    videoId(): string {
+      return this.$store.getters["video/getVideoId"];
+    },
+    start(): number {
+      return this.$store.getters["video/getStartTime"];
+    },
+    end(): number {
+      return this.$store.getters["video/getEndTime"];
+    },
+    word(): string {
+      return this.$store.getters["video/getWordTime"];
+    },
     loopTrigerMilliSecond(): number {
       return (this.end - this.start) * 1000;
     },
@@ -106,8 +118,8 @@ export default Vue.extend({
     },
     playerVars(): any {
       return {
-        controls: 0,
-        rel: 0,
+        //controls: 0,
+        //rel: 0,
         autoplay: 1,
         playlist: this.videoId,
         muted: 1,
@@ -118,6 +130,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    isParams(): boolean {
+      return !!this.videoId && !!this.start && !!this.end;
+    },
     ready(): void {
       this.player.playVideo();
     },

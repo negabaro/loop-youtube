@@ -68,7 +68,20 @@ export default Vue.extend({
         },
         { property: "og:image:type", content: "image/gif" },
         { property: "og:image:width", content: "500" },
-        { property: "og:image:height", content: "376" }
+        { property: "og:image:height", content: "376" },
+        { property: "og:type", content: "video.other" },
+        {
+          property: "og:video:secure_url",
+          content: "https://www.youtube.com/embed/1IxnZtmP_7c"
+        },
+        {
+          property: "og:video:url",
+          content: "https://www.youtube.com/embed/1IxnZtmP_7c"
+        },
+        { property: "og:video:width", content: "1280" },
+        { property: "og:video:height", content: "720" },
+        { property: "og:video:type", content: "text/html" }
+
         // ...
       ];
     }

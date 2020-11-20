@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-view />
-    <!-- <div v-if="isParams">
+    <!-- <router-view /> -->
+    <div v-if="isParams">
       <Youtube
         :start="start"
         :end="end"
@@ -11,7 +11,7 @@
     </div>
     <div v-else>
       <GenerateUrl />
-    </div> -->
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -39,8 +39,8 @@ Vue.use(VueHead);
 
 export default Vue.extend({
   components: {
-    //GenerateUrl,
-    //Youtube
+    GenerateUrl,
+    Youtube
   },
   data() {
     return {

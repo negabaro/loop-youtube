@@ -1,54 +1,59 @@
 <template>
   <div id="app">
+    <div id="nav">
+      <h1>{{this.description}}</h1>
+      <!-- <div id="player" /> -->
+      <div v-if="isParams">
+        <youtube
+          :video-id="videoId"
+          :player-vars="playerVars"
+          @ready="ready"
+          @ended="ended"
+          @error="error"
+          ref="youtube"
+        />
+      </div>
+      <div v-else>
+        <GenerateUrl />
+
+      </div>
+      <!-- <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> -->
+    </div>
     <!-- <router-view /> -->
-    <div v-if="isParams">
-      <Youtube
-        :start="start"
-        :end="end"
-        :videoId="videoId"
-        :word="word"
-      />
-    </div>
-    <div v-else>
-      <GenerateUrl />
-    </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import VueYoutube from "vue-youtube";
 import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import VueHead from "vue-head";
 import GenerateUrl from "@/components/GenerateUrl.vue";
-import Youtube from "@/components/Youtube.vue";
-import {
-  SET_VIDEO_ID,
-  SET_WORD,
-  SET_START_TIME,
-  SET_END_TIME
-} from "@/store/Video/mutations";
-
+//let YouTubeIframeLoader = require("youtube-iframe");
+//const VueYoutube = require("vue-youtube");
+Vue.use(VueYoutube);
 Vue.use(VueHead);
-
-//export type DataType = {
-//  title: string;
-//  videoId: string;
-//  word: string;
-//  start: number;
-//  end: number;
-//};
-
 export default Vue.extend({
   components: {
-    GenerateUrl,
-    Youtube
+    GenerateUrl
+    //VueYoutube
   },
   data() {
     return {
-      title: "Loop Youtube"
-      //videoId: "",
-      //word: "",
-      //start: 0,
-      //end: 0
+      title: "Loop Youtube",
+      //description: "sdsdsdsdsd",
+      videoId: "",
+      word: "",
+      start: 0,
+      end: 0
+      //duration: 0,
+      //currentLoopCount: 0
+      //player: null,
+      //playerVars: {
+      //  autoplay: 1,
+      //  start: 20,
+      //  end: 30
+      //}
     };
   },
   head: {
@@ -68,20 +73,7 @@ export default Vue.extend({
         },
         { property: "og:image:type", content: "image/gif" },
         { property: "og:image:width", content: "500" },
-        { property: "og:image:height", content: "376" },
-        { property: "og:type", content: "video.other" },
-        {
-          property: "og:video:secure_url",
-          content: "https://www.youtube.com/embed/1IxnZtmP_7c"
-        },
-        {
-          property: "og:video:url",
-          content: "https://www.youtube.com/embed/1IxnZtmP_7c"
-        },
-        { property: "og:video:width", content: "1280" },
-        { property: "og:video:height", content: "720" },
-        { property: "og:video:type", content: "text/html" }
-
+        { property: "og:image:height", content: "376" }
         // ...
       ];
     }
@@ -121,63 +113,116 @@ export default Vue.extend({
   },
   //https://loop-youtube.netlify.app/?v=WIUH0lhsbL0&s=00:20&e=00:30
   created() {
-    this.$store.commit(`video/${SET_VIDEO_ID}`, getParam("v"));
-    //this.videoId = getParam("v");
-    this.$store.commit(`video/${SET_START_TIME}`, toSecond(getParam("s")));
-    //this.start = toSecond(getParam("s"));
-    this.$store.commit(`video/${SET_END_TIME}`, toSecond(getParam("e")));
-    //this.end = toSecond(getParam("e"));
-    this.$store.commit(`video/${SET_WORD}`, toSecond(getParam("w")));
-    //this.word = getParam("w");
+    //const params = location.pathname.split("/");
+    this.videoId = getParam("v");
+    this.start = toSecond(getParam("s"));
+    this.end = toSecond(getParam("e"));
+    this.word = getParam("w");
+    console.log("xx this.word", this.word);
+    //this.loadVideoById();
+    //console.log(location.pathname.split("/"));
   },
   computed: {
-    videoId(): string {
-      return this.$store.getters["video/getVideoId"];
-    },
-    start(): number {
-      return this.$store.getters["video/getStartTime"];
-    },
-    end(): number {
-      return this.$store.getters["video/getEndTime"];
-    },
-    word(): string {
-      return this.$store.getters["video/getWordTime"];
-    },
     metaTitle(): string {
-      if (this.isParams) {
-        return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
-      } else {
-        return `${this.title}`;
-      }
+      return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
     },
     decodedWord(): string {
       return decodeURIComponent(this.word);
     },
     description(): string {
-      if (this.isParams) {
-        return `${this.decodedWord} | ${toHHMMSS(this.start)}~${toHHMMSS(
-          this.end
-        )}`;
-      } else {
-        return "";
-      }
+      return `${this.decodedWord} | ${toHHMMSS(this.start)}~${toHHMMSS(
+        this.end
+      )}`;
     },
     img(): string {
       return `https://i.ytimg.com/vi/${this.videoId}/mqdefault.jpg`;
     },
+    playerVars(): any {
+      return {
+        autoplay: 1,
+        start: this.start,
+        end: this.end
+      };
+    },
     isParams(): boolean {
       return !!this.videoId && !!this.start && !!this.end;
+    },
+    //player() {
+    //  YouTubeIframeLoader.load((YT: any) => {
+    //    const player = new YT.Player("player", {
+    //      //startSeconds: '1999',
+    //      //height: '390',
+    //      //width: '640',
+    //      videoId: this.videoId,
+    //      //videoId: "Vw-tayLQLuQ",
+    //      events: {}
+    //    });
+    //  });
+    //},
+    player(): any {
+      const youtube: any = this.$refs.youtube;
+      //console.log("this.$refs.youtube", this.$refs.youtube);
+      console.log("xxxxx jjjjjjjj", this.$refs.j);
+      console.log("xxxxx videoData", this.$refs.videoData);
+      return youtube.player;
+    }
+  },
+  methods: {
+    //createFrame() {
+    //  return new YT.Player("ytplayer", {
+    //    height: "285",
+    //    width: "480",
+    //    events: {
+    //      onReady: onPlayerReady
+    //    }
+    //  });
+    //},
+    //cueVideoById() {
+    //  this.player.cueVideoById({
+    //    videoId: this.videoId,
+    //    startSeconds: 20,
+    //    endSeconds: 30
+    //  });
+    //},
+    playVideo() {
+      this.player.playVideo();
+    },
+    loadVideoById() {
+      //console.log("loadVideoById this.player", this.player);
+      //console.log("loadVideoById this.player", this.videoId);
+      //this.player.loadVideoById({
+      //  videoId: this.videoId,
+      //  startSeconds: 20,
+      //  endSeconds: 30
+      //});
+    },
+    ready() {
+      //console.log("ready this.player", this.player);
+      //console.log("ready this.player getVideoData", this.player.getVideoData);
+      //console.log(
+      //  "ready this.player getDuration",
+      //  await this.player.getDuration()
+      //);
+      //const playerDom = await this.player.getIframe();
+      //console.log("playerDom", playerDom);
+      //console.log(
+      //  "ready this.player getIframe",
+      //  playerDom.querySelector("iframe")
+      //);
+      this.playVideo();
+      //this.loadVideoById();
+      //this.cueVideoById();
+    },
+    ended() {
+      this.player.seekTo(this.start);
+    },
+    error(e: any) {
+      //console.log("error", e);
     }
   }
 });
 </script>
-<style lang="scss">
-@import "../node_modules/bulma/bulma.sass";
-
-iframe {
-  width: 100%;
-  max-width: 650px; /* Also helpful. Optional. */
-}
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -185,16 +230,13 @@ iframe {
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }

@@ -1,6 +1,6 @@
 [[redirects]]
-  from = "/"
-  to = "/watch"
+  from = "/watch"
+  to = "/"
   status = 301
   force = false
   query = {path = ":path"}

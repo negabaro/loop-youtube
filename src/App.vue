@@ -1,20 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <h1>ver13</h1>
+      <h1>ver14</h1>
       <h1>{{this.description}}</h1>
       <!-- <div id="player" /> -->
       <div v-if="isParams">
-        <iframe
-          src="https://player.vimeo.com/video/342787403?playsinline=1"
-          width="640"
-          height="360"
-          frameborder="0"
-          webkitallowfullscreen
-          mozallowfullscreen
-          allowfullscreen
-        ></iframe>
-
         <div id="player2" />
         <!-- <youtube
           :video-id="videoId"
@@ -129,54 +119,15 @@ export default Vue.extend({
   },
   //https://loop-youtube.netlify.app/?v=WIUH0lhsbL0&s=00:20&e=00:30
   created() {
-    console.log("created");
-    //setInterval(console.log(" created setInterval"), 100);
-
-    //const timeupdater = setInterval(console.log(" created setInterval!"), 100); //dame
-    //const timeupdater = setInterval(function() {
-    //  console.log("ほげもげタイマー起動！");
-    //}, 1000);
-
-    //setInterval(function() {
-    //  console.log("ほげもげタイマー起動！");
-    //}, 1000);
-
-    //setInterval(console.log(" created setInterval!"), 100); //dame
-
-    //console.log("timeupdater", timeupdater);
-
-    //const params = location.pathname.split("/");
     this.videoId = getParam("v");
     this.start = toSecond(getParam("s"));
     this.end = toSecond(getParam("e"));
     this.word = getParam("w");
     this.player2();
-    //console.log("xx this.word", this.word);
-    //this.loadVideoById();
-    //console.log(location.pathname.split("/"));
-  },
-  mounted() {
-    console.log("mounted");
-  },
-  beforeUpdate() {
-    console.log("beforeUpdate");
-  },
-  updated() {
-    console.log("updated");
-  },
-  beforeDestroy() {
-    console.log("beforeDestroy");
-  },
-
-  beforeMount() {
-    console.log("beforeMount");
   },
   computed: {
     endPlus1(): number {
       return this.end + 1;
-    },
-    loopTrigerMilliSecond(): number {
-      return (this.end - this.start) * 1000;
     },
     metaTitle(): string {
       return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
@@ -212,23 +163,8 @@ export default Vue.extend({
     isParams(): boolean {
       return !!this.videoId && !!this.start && !!this.end;
     },
-    //player() {
-    //  YouTubeIframeLoader.load((YT: any) => {
-    //    const player = new YT.Player("player", {
-    //      //startSeconds: '1999',
-    //      //height: '390',
-    //      //width: '640',
-    //      videoId: this.videoId,
-    //      //videoId: "Vw-tayLQLuQ",
-    //      events: {}
-    //    });
-    //  });
-    //},
     player(): any {
       const youtube: any = this.$refs.youtube;
-      //console.log("this.$refs.youtube", this.$refs.youtube);
-      //console.log("xxxxx jjjjjjjj", this.$refs.j);
-      //console.log("xxxxx videoData", this.$refs.videoData);
       return youtube.player;
     }
   },
@@ -245,7 +181,6 @@ export default Vue.extend({
             onReady: () => {
               (this as any).player3 = player;
               this.playingTime = this.start;
-              console.log("player3", (this as any).player3);
               (this as any).player3.loadVideoById({
                 videoId: this.videoId,
                 //videoId: "Vw-tayLQLuQ",
@@ -261,13 +196,8 @@ export default Vue.extend({
                 //startSeconds: hmsToSecondsOnly(this.props.start_time) || 0,
                 //endSeconds: hmsToSecondsOnly(this.props.end_time) || 100
               });
-              //setInterval("this.updateTime(player)", 100);
-              //setInterval(console.log("setInterval"), 100);
             },
             onStateChange: e => {
-              //this.onPlayerStateChange(YT, e);
-              console.log("e.data", e.data);
-              //let done = false;
               //switch(e.data){
               //    case YT.PlayerState.ENDED:
               //       s+=" / YT.PlayerState.ENDED";
@@ -287,40 +217,13 @@ export default Vue.extend({
               // }
               //let timeupdater;
               if (e.data == YT.PlayerState.ENDED) {
-                console.log("YT.PlayerState.END timeupdater", this.timeupdater);
                 this.clearTimeInterval();
-                //setTimeout(this.seekTo, 1000);
-                //player.seekTo(this.start);
-
-                //player.loadVideoById({
-                //  videoId: this.videoId,
-                //  startSeconds: this.start || 0,
-                //  endSeconds: this.end || player.getDuration()
-                //  //startSeconds: hmsToSecondsOnly(this.props.start_time) || 0,
-                //  //endSeconds: hmsToSecondsOnly(this.props.end_time) || 100
-                //});
-                //} else if (e.data == YT.PlayerState.PLAYING && !done) {
               } else if (e.data == YT.PlayerState.PLAYING) {
-                //debugger;
-                console.log("YT.PlayerState.PLAYING", (this as any).player3);
-                //setTimeout(this.seekTo2, 1000);
-                //const player = (this as any).player3;
-                //setInterval("this.updateTime", 100); //dame
-
                 const updateTime = this.updateTime;
                 (this as any).timeupdater = setInterval(function() {
-                  //console.log("ほげもげタイマー起動！");
                   updateTime();
                 }, 1000);
-
-                //setInterval(console.log("setInterval"), 100);
-                //setTimeout(this.seekTo, this.loopTrigerMilliSecond);
-                //done = true;
               } else if (e.data == YT.PlayerState.PAUSED) {
-                console.log(
-                  "YT.PlayerState.PAUSED timeupdater",
-                  this.timeupdater
-                );
                 this.clearTimeInterval();
               }
             }
@@ -328,28 +231,11 @@ export default Vue.extend({
         });
       });
     },
-    //createFrame() {
-    //  return new YT.Player("ytplayer", {
-    //    height: "285",
-    //    width: "480",
-    //    events: {
-    //      onReady: onPlayerReady
-    //    }
-    //  });
-    //},
-    //cueVideoById() {
-    //  this.player.cueVideoById({
-    //    videoId: this.videoId,
-    //    startSeconds: 20,
-    //    endSeconds: 30
-    //  });
-    //},
     clearTimeInterval() {
       clearInterval((this as any).timeupdater);
     },
     updateTime() {
       const player = (this as any).player3;
-      console.log("updateTime player", player);
       const oldTime = this.videotime;
       if (player && player.getCurrentTime) {
         this.videotime = player.getCurrentTime();
@@ -359,69 +245,19 @@ export default Vue.extend({
       }
     },
     onProgress(currentTime) {
-      console.log("onProgress", `${Math.floor(currentTime)} - ${this.end}`);
       if (Math.floor(currentTime) == this.end) {
-        console.log(
-          "match onProgress",
-          `${Math.floor(currentTime)} - ${this.end}`
-        );
         this.seekTo();
         this.clearTimeInterval();
-        //timeupdater;
       }
-      //if (currentTime > 20) {
-      //  console.log("the video reached 20 seconds!");
-      //}
     },
     playVideo() {
       this.player.playVideo();
     },
-    loadVideoById() {
-      //console.log("loadVideoById this.player", this.player);
-      //console.log("loadVideoById this.player", this.videoId);
-      //this.player.loadVideoById({
-      //  videoId: this.videoId,
-      //  startSeconds: 20,
-      //  endSeconds: 30
-      //});
-    },
-    ready() {
-      //console.log("ready this.player", this.player);
-      //console.log("ready this.player getVideoData", this.player.getVideoData);
-      //console.log(
-      //  "ready this.player getDuration",
-      //  await this.player.getDuration()
-      //);
-      //const playerDom = await this.player.getIframe();
-      //console.log("playerDom", playerDom);
-      //console.log(
-      //  "ready this.player getIframe",
-      //  playerDom.querySelector("iframe")
-      //);
-      //this.playVideo();
-      //this.player.mute();
-      //this.player.setVolume(0);
-      //player.setSize(1920, 1080);
-      //this.player.setLoop(true);
-      //this.loadVideoById();
-      //this.cueVideoById();
-    },
-    playing() {
-      //setTimeout(this.seekTo, this.loopTrigerMilliSecond);
-      //this.player.setVolume(100);
-      //setTimeout(this.seekTo, 1000);
-    },
     seekTo(): void {
-      console.warn("seekTo");
       (this as any).player3.seekTo(this.start);
-    },
-    seekTo2() {
-      console.log("seekTo2", this.playingTime);
-      this.playingTime += 1;
     },
     ended() {
       this.seekTo();
-      //this.player.seekTo(this.start);
     },
     error(e: any) {
       //console.log("error", e);

@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <h1>ver14</h1>
-      <h1>{{this.description}}</h1>
+      <!-- <h1>ver14</h1> -->
+
       <!-- <div id="player" /> -->
       <div v-if="isParams">
+        <h1 class="itc-kabel">{{this.description}}</h1>
         <div id="player2" />
         <!-- <youtube
           :video-id="videoId"
@@ -269,12 +270,21 @@ export default Vue.extend({
 });
 </script>
 <style>
+.itc-kabel {
+  font-family: ITCKabel;
+}
+.line {
+  border-bottom: 2px solid #fff;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
 }
 #nav {
   padding: 30px;

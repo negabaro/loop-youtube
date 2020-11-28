@@ -73,7 +73,6 @@
 import Vue from "vue";
 import VueYoutube from "vue-youtube";
 Vue.use(VueYoutube);
-
 //import { toSecond, toHHMMSS, getParam } from "@/util/index";
 export default Vue.extend({
   //name: "youtube",
@@ -89,7 +88,6 @@ export default Vue.extend({
       resizeStatus: true
     };
   },
-
   created() {
     console.log("xxx videoId:", this.videoId);
     //const params = location.pathname.split("/");
@@ -121,10 +119,10 @@ export default Vue.extend({
         //controls: 0,
         //rel: 0,
         autoplay: 1,
-        playlist: this.videoId,
-        muted: 1,
-        loop: 1,
-        start: this.start,
+        //playlist: this.videoId,
+        //muted: 1,
+        //loop: 1,
+        //start: this.start,
         end: this.end
       };
     }
@@ -137,12 +135,15 @@ export default Vue.extend({
       this.player.playVideo();
     },
     playing(): void {
+      console.log("playing");
       //setTimeout(this.seekTo, this.loopTrigerMilliSecond);
     },
     ended() {
-      this.seekTo();
+      console.log("ended");
+      //this.seekTo();
     },
     seekTo(): void {
+      console.warn("seekTo");
       this.player.seekTo(this.start);
     }
   }

@@ -1,7 +1,13 @@
 <template>
   <div>
-    <h5> {{shareLinkUrl}} </h5>
-    <button class="button search-button">Link Share</button>
+    <h5 id="qr-url"> {{shareLinkUrl()}} </h5>
+
+    <button
+      id="copy-button"
+      @click="onClick"
+      class="button search-button"
+      data-clipboard-target="#qr-url"
+    >Link Copy</button>
     <h2 class="nav-link subtitle is-size-3">
       <!-- <a href="https://www.instagram.com/romesrf/"><span class="icon"><svg
             aria-hidden="true"
@@ -82,6 +88,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import ClipboardJS from "clipboard";
 
 export default Vue.extend({
   name: "searchButton",
@@ -99,6 +106,10 @@ export default Vue.extend({
     //(this as any).videoId = getParam("v");
   },
   computed: {
+  methods: {
+    onClick() {
+      const clipboard = new ClipboardJS("#copy-button");
+    },
     shareLinkUrl() {
       return `https://l-youtube.com/watch?v=xxx`;
     }

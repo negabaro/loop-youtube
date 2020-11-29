@@ -7,6 +7,7 @@
     <div v-if="isParams">
       <h1 class="itc-kabel">{{this.description}}</h1>
       <div id="player2" />
+      <LinkShare />
       <!-- <youtube
           :video-id="videoId"
           :player-vars="playerVars"
@@ -21,6 +22,7 @@
       <GenerateUrl />
 
     </div>
+
     <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
 
@@ -34,6 +36,8 @@ import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import VueHead from "vue-head";
 import GenerateUrl from "@/components/GenerateUrl.vue";
 import navLink from "@/components/navLink.vue";
+import LinkShare from "@/components/LinkShare.vue";
+
 //const YouTubeIframeLoader = require("youtube-iframe");
 import YouTubeIframeLoader from "youtube-iframe";
 Vue.use(VueYoutube);
@@ -41,7 +45,8 @@ Vue.use(VueHead);
 export default Vue.extend({
   components: {
     GenerateUrl,
-    navLink
+    navLink,
+    LinkShare
     //VueYoutube
   },
   data() {
@@ -271,7 +276,7 @@ export default Vue.extend({
   }
 });
 </script>
-<style>
+<style lang="scss">
 .itc-kabel {
   font-family: ITCKabel;
 }
@@ -296,5 +301,39 @@ export default Vue.extend({
 }
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.search-button:focus {
+  outline: none;
+}
+.search-button {
+  cursor: pointer;
+  margin-left: 5px;
+
+  @media screen and (max-width: 479px) {
+    align-items: center;
+    margin-left: 0px;
+  }
+  padding: 0px 40px 0px 40px;
+
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  line-height: 50px;
+}
+
+.search-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-button:active {
+  /*押したとき*/
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px); /*沈むように*/
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  background-image: linear-gradient(
+    #fed6e3 0%,
+    #ffbcbc 100%
+  ); /*グラデーションを明るく*/
 }
 </style>

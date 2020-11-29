@@ -44,6 +44,7 @@
             <div class="line" />
             <h1>video</h1>
             <vueSlider />
+            <LinkShare />
           </template>
 
           <!-- <div class="line" /> -->
@@ -87,14 +88,15 @@ import Vue from "vue";
 import loading from "@/components/loading.vue";
 import vueSlider from "@/components/vueSlider.vue";
 //import navLink from "@/components/navLink.vue";
-
+import LinkShare from "@/components/LinkShare.vue";
 import getYouTubeID from "get-youtube-id";
 
 export default Vue.extend({
   name: "generateUrl",
   components: {
     loading,
-    vueSlider
+    vueSlider,
+    LinkShare
     //navLink
     //VueYoutube
   },
@@ -168,6 +170,10 @@ a {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  @media screen and (max-width: 479px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 .search-form-group {
   display: flex;
@@ -184,6 +190,12 @@ a {
 .search-button {
   cursor: pointer;
   margin-left: 5px;
+
+  @media screen and (max-width: 479px) {
+    align-items: center;
+    margin-left: 0px;
+  }
+  padding: 0px 40px 0px 40px;
 
   background-color: transparent;
   border: 2px solid #fff;

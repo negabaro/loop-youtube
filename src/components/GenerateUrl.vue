@@ -1,8 +1,11 @@
 <template>
-  <div class="generateUrl">
+  <div class="generate-url">
+
     <section class="hero">
+
       <div class="hero-body">
         <div class="container">
+
           <h1 class="title">
             Loop Youtube
           </h1>
@@ -11,19 +14,38 @@
             Paste a Youtube URL you want to loop below and click "Search button"
           </h2>
           <div class="search-group">
-            <input
-              class="search-form"
-              type="text"
-              placeholder="https://www.youtube.com/watch?v=9bZkp7q19f0"
-            />
-            <a
-              href="#"
+            <div class="search-form-group">
+              <input
+                v-model="searchFormText"
+                class="search-form"
+                type="text"
+                placeholder="https://www.youtube.com/watch?v=9bZkp7q19f0"
+              />
+
+              <span
+                v-if="validationErrorStatus"
+                class="help-block error"
+                style="margin-top: 5px;color: red"
+              >Please enter a valid Youtube URL.</span>
+            </div>
+            <button
+              @click="onClick"
               class="button search-button"
-            >Search</a>
+            >Search</button>
           </div>
+
           <br>
           <br>
-          <loading />
+          <template v-if="loadingStatus">
+            <div class="line" />
+            <loading />
+          </template>
+          <template v-else-if="!loadingStatus && showVideoStatus">
+            <div class="line" />
+            <h1>video</h1>
+            <vueSlider />
+          </template>
+
           <!-- <div class="line" /> -->
           <!-- <h2 class="subtitle">
             Hero subtitle
@@ -63,12 +85,26 @@
 <script lang="ts">
 import Vue from "vue";
 import loading from "@/components/loading.vue";
+import vueSlider from "@/components/vueSlider.vue";
+//import navLink from "@/components/navLink.vue";
+
+import getYouTubeID from "get-youtube-id";
 
 export default Vue.extend({
   name: "generateUrl",
   components: {
-    loading
+    loading,
+    vueSlider
+    //navLink
     //VueYoutube
+  },
+  data() {
+    return {
+      loadingStatus: false,
+      showVideoStatus: false,
+      validationErrorStatus: false,
+      searchFormText: ""
+    };
   },
   //props: {
   //  msg: String
@@ -76,50 +112,33 @@ export default Vue.extend({
   created() {
     //const params = location.pathname.split("/");
     //(this as any).videoId = getParam("v");
+  },
+  methods: {
+    onClick() {
+      console.log("onClick searchFormText", getYouTubeID(this.searchFormText));
+      if (getYouTubeID(this.searchFormText)) {
+        this.validationErrorStatus = false;
+        this.loadingStatus = true;
+        const showVideo = this.showVideo;
+
+        setTimeout(function() {
+          showVideo();
+        }, 2000);
+      } else {
+        this.validationErrorStatus = true;
+      }
+    },
+    showVideo() {
+      console.log("showVideo");
+      this.showVideoStatus = true;
+      this.loadingStatus = false;
+    }
   }
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.search-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.search-form {
-  width: 530px;
-  background: rgba(255, 255, 255, 0.5);
-}
-.search-button {
-  margin-left: 5px;
-
-  display: inline-block;
-  position: relative;
-  text-decoration: none;
-  color: #f9a9ae;
-  width: 120px;
-  height: 58px;
-  line-height: 58px;
-  border-radius: 5px;
-  text-align: center;
-  overflow: hidden;
-  font-weight: bold;
-  background: linear-gradient(#fed6e3 0%, #ffaaaa 100%);
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
-}
-
-.search-button:active {
-  /*押したとき*/
-  -webkit-transform: translateY(2px);
-  transform: translateY(2px); /*沈むように*/
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-  background-image: linear-gradient(
-    #fed6e3 0%,
-    #ffbcbc 100%
-  ); /*グラデーションを明るく*/
-}
+<style scoped lang="scss">
 input {
   font-size: 20px;
   height: 54px;
@@ -142,6 +161,48 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  text-decoration: none;
+}
+
+.search-group {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.search-form-group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.search-form {
+  width: 530px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.search-button:focus {
+  outline: none;
+}
+.search-button {
+  cursor: pointer;
+  margin-left: 5px;
+
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  line-height: 50px;
+}
+
+.search-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-button:active {
+  /*押したとき*/
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px); /*沈むように*/
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  background-image: linear-gradient(
+    #fed6e3 0%,
+    #ffbcbc 100%
+  ); /*グラデーションを明るく*/
 }
 </style>

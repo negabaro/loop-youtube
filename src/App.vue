@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <!-- <h1>ver14</h1> -->
-
-      <!-- <div id="player" /> -->
-      <div v-if="isParams">
-        <h1 class="itc-kabel">{{this.description}}</h1>
-        <div id="player2" />
-        <!-- <youtube
+    <navLink />
+    <div class="line" />
+    <!-- <h1>ver14</h1> -->
+    <!-- <div id="player" /> -->
+    <div v-if="isParams">
+      <h1 class="itc-kabel">{{this.description}}</h1>
+      <div id="player2" />
+      <!-- <youtube
           :video-id="videoId"
           :player-vars="playerVars"
           @ready="ready"
@@ -16,14 +16,14 @@
           @error="error"
           ref="youtube"
         /> -->
-      </div>
-      <div v-else>
-        <GenerateUrl />
-
-      </div>
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
     </div>
+    <div v-else>
+      <GenerateUrl />
+
+    </div>
+    <!-- <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> -->
+
     <!-- <router-view /> -->
   </div>
 </template>
@@ -33,13 +33,15 @@ import VueYoutube from "vue-youtube";
 import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import VueHead from "vue-head";
 import GenerateUrl from "@/components/GenerateUrl.vue";
+import navLink from "@/components/navLink.vue";
 //const YouTubeIframeLoader = require("youtube-iframe");
 import YouTubeIframeLoader from "youtube-iframe";
 Vue.use(VueYoutube);
 Vue.use(VueHead);
 export default Vue.extend({
   components: {
-    GenerateUrl
+    GenerateUrl,
+    navLink
     //VueYoutube
   },
   data() {
@@ -285,10 +287,9 @@ export default Vue.extend({
 
   text-align: center;
   color: #fff;
+  width: 100%;
 }
-#nav {
-  padding: 30px;
-}
+
 #nav a {
   font-weight: bold;
   color: #2c3e50;

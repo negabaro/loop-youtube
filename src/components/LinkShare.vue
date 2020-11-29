@@ -23,7 +23,12 @@
         <i class="fab fa-youtube svg-inline--fa"></i>
       </span>
 
-      <a href="https://twitter.com/loop-youtube"><span class="icon"><svg
+      <a
+        href="#"
+        onclick="javascript:window.open('https://twitter.com/intent/tweet?text=[%EA%B3%B5%EC%9C%A0]%20' +encodeURIComponent(document.URL)+'%20-%20'+encodeURIComponent(document.title), 'twittersharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+        target="_blank"
+        alt="Share on Twitter"
+      ><span class="icon"><svg
             aria-hidden="true"
             focusable="false"
             data-prefix="fab"

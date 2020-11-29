@@ -8,7 +8,10 @@ const state: VideoState = {
   startTime: 0,
   endTime: 0,
   videoId: "",
-  word: ""
+  word: "",
+  player: Object,
+  loadingStatus: false,
+  showVideoStatus: false
 };
 
 export const video: Module<VideoState, RootState> = {

@@ -41,9 +41,12 @@
             <loading />
           </template>
           <template v-else-if="!loadingStatus && showVideoStatus">
-            <div class="line" />
-            <h1>video</h1>
-            <vueSlider />
+            <!-- <div class="line" /> -->
+            <div class="edit-youtube-group">
+
+              <YoutubeIframe />
+
+            </div>
             <LinkShare />
           </template>
 
@@ -86,17 +89,21 @@
 <script lang="ts">
 import Vue from "vue";
 import loading from "@/components/loading.vue";
-import vueSlider from "@/components/vueSlider.vue";
+//import vueSlider from "@/components/vueSlider.vue";
 //import navLink from "@/components/navLink.vue";
 import LinkShare from "@/components/LinkShare.vue";
+import YoutubeIframe from "@/components/YoutubeIframe.vue";
 import getYouTubeID from "get-youtube-id";
+
+import { SET_VIDEO_ID } from "@/store/Video/mutations";
 
 export default Vue.extend({
   name: "generateUrl",
   components: {
     loading,
-    vueSlider,
-    LinkShare
+    //vueSlider,
+    LinkShare,
+    YoutubeIframe
     //navLink
     //VueYoutube
   },
@@ -108,6 +115,7 @@ export default Vue.extend({
       searchFormText: ""
     };
   },
+
   //props: {
   //  msg: String
   //},
@@ -117,15 +125,18 @@ export default Vue.extend({
   },
   methods: {
     onClick() {
-      console.log("onClick searchFormText", getYouTubeID(this.searchFormText));
-      if (getYouTubeID(this.searchFormText)) {
+      //console.log("onClick searchFormText", getYouTubeID(this.searchFormText));
+      const videoId = getYouTubeID(this.searchFormText);
+      if (videoId) {
         this.validationErrorStatus = false;
         this.loadingStatus = true;
         const showVideo = this.showVideo;
 
+        this.$store.commit(`video/${SET_VIDEO_ID}`, videoId);
+        //showVideo();
         setTimeout(function() {
           showVideo();
-        }, 2000);
+        }, 1000);
       } else {
         this.validationErrorStatus = true;
       }
@@ -165,6 +176,9 @@ li {
 a {
   text-decoration: none;
 }
+//.edit-youtube-group {
+//  max-width: 750px;
+//}
 
 .search-group {
   display: flex;

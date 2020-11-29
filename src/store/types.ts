@@ -3,6 +3,9 @@ export interface VideoState {
   endTime: Number;
   videoId: String;
   word: String;
+  player: Object;
+  loadingStatus: boolean;
+  showVideoStatus: boolean;
 }
 
 export interface RootState {

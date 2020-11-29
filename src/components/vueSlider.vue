@@ -1,10 +1,11 @@
 <template>
   <vue-slider
     ref="slider"
+    class="vue-slider-custom"
     v-model="value"
-    :min="15"
-    :max="360"
-    :interval="1"
+    :min="start"
+    :max="end"
+    :interval="interval"
     :tooltip="'always'"
     :process="process"
     :tooltip-formatter="Tformatter"
@@ -23,6 +24,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      interval: 1,
       value: [0, 5],
       Tformatter: val => {
         const min = Math.floor(val / 60);
@@ -38,10 +40,32 @@ export default Vue.extend({
   //  msg: String
   //},
   created() {
+    console.log("created this.start", this.start);
+    console.log("created this.end", this.end);
+    console.log(
+      "created (this.end - this.start)% interval  ",
+      (this.end - this.start) % this.interval
+    );
+    //this.value = [this.start, this.end];
     //const params = location.pathname.split("/");
     //(this as any).videoId = getParam("v");
+  },
+  mounted() {
+    console.log("mounted this.start", this.start);
+    console.log("mounted this.end", this.end);
+  },
+  computed: {
+    start(): number {
+      return this.$store.getters["video/getStartTime"];
+    },
+    end(): number {
+      return this.$store.getters["video/getEndTime"];
+    }
   }
 });
 </script>
 <style scoped lang="scss">
+.vue-slider-custom {
+  padding: 10px 190px !important;
+}
 </style>

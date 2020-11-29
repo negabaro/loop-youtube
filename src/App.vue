@@ -6,7 +6,8 @@
     <!-- <div id="player" /> -->
     <div v-if="isParams">
       <h1 class="itc-kabel">{{this.description}}</h1>
-      <div id="player2" />
+      <!-- <div id="player2" /> -->
+      <YoutubeIframe />
       <LinkShare />
       <!-- <youtube
           :video-id="videoId"
@@ -37,16 +38,23 @@ import VueHead from "vue-head";
 import GenerateUrl from "@/components/GenerateUrl.vue";
 import navLink from "@/components/navLink.vue";
 import LinkShare from "@/components/LinkShare.vue";
-
+import YoutubeIframe from "@/components/YoutubeIframe.vue";
 //const YouTubeIframeLoader = require("youtube-iframe");
 import YouTubeIframeLoader from "youtube-iframe";
+import {
+  SET_VIDEO_ID,
+  SET_START_TIME,
+  SET_END_TIME,
+  SET_WORD
+} from "@/store/Video/mutations";
 Vue.use(VueYoutube);
 Vue.use(VueHead);
 export default Vue.extend({
   components: {
     GenerateUrl,
     navLink,
-    LinkShare
+    LinkShare,
+    YoutubeIframe
     //VueYoutube
   },
   data() {
@@ -128,10 +136,18 @@ export default Vue.extend({
   //https://loop-youtube.netlify.app/?v=WIUH0lhsbL0&s=00:20&e=00:30
   created() {
     this.videoId = getParam("v");
+    this.$store.commit(`video/${SET_VIDEO_ID}`, this.videoId);
+
     this.start = toSecond(getParam("s"));
+    this.$store.commit(`video/${SET_START_TIME}`, this.start);
+
     this.end = toSecond(getParam("e"));
+    console.log("xxxxxxxxxxSET_END_TIME ", this.end);
+    this.$store.commit(`video/${SET_END_TIME}`, this.end);
+
     this.word = getParam("w");
-    this.player2();
+    this.$store.commit(`video/${SET_WORD}`, this.word);
+    //this.player2();
   },
   computed: {
     endPlus1(): number {

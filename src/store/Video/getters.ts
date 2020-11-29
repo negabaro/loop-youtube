@@ -13,6 +13,15 @@ const getters: GetterTree<VideoState, RootState> = {
   },
   getWord: state => {
     return state.word;
+  },
+  getPlayer: state => {
+    return state.player;
+  },
+  getLoadingStatus: state => {
+    return state.loadingStatus;
+  },
+  getShowVideoStatus: state => {
+    return state.showVideoStatus;
   }
   //getDuration: state => {
   //  //console.log("getitems", state.videoId);

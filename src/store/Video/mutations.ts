@@ -3,10 +3,13 @@ import { VideoState } from "@/store/types";
 //import { YTDurationToSeconds } from "@/lib/util/youtube";
 //import { toHHMMSS, toSecond } from "@/lib/util/index";
 
+export const SET_PLAYER = "setPlayer";
 export const SET_VIDEO_ID = "setVideoId";
 export const SET_START_TIME = "setStartTime";
 export const SET_END_TIME = "setEndTime";
 export const SET_WORD = "setWord";
+export const SET_SHOW_VIDEO_STATUS = "setShowVideoStatus";
+export const SET_LOADING_STATUS = "setLoadingStatus";
 //export const SET_DURATION = "setDuration";
 //export const SET_LOOP_COUNT = "setLoopCount";
 
@@ -20,7 +23,9 @@ const mutations: MutationTree<VideoState> = {
   },
   setStartTime: (state, startTime) => {
     //state.startTime = toHHMMSS(startTime);
-    state.startTime = startTime;
+    if (startTime) {
+      state.startTime = startTime;
+    }
   },
   setEndTime: (state, endTime) => {
     //state.endTime = toHHMMSS(endTime);
@@ -29,6 +34,15 @@ const mutations: MutationTree<VideoState> = {
   setWord: (state, word) => {
     //state.endTime = toHHMMSS(endTime);
     state.word = word;
+  },
+  setPlayer: (state, player) => {
+    state.player = player;
+  },
+  setShowVideoStatus: (state, showVideoStatus) => {
+    state.showVideoStatus = showVideoStatus;
+  },
+  setLoadingStatus: (state, loadingStatus) => {
+    state.loadingStatus = loadingStatus;
   }
   //setLoopCount: (state, loopCount) => {
   //  state.loopCount = loopCount;

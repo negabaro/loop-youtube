@@ -89,6 +89,7 @@
 <script lang="ts">
 import Vue from "vue";
 import ClipboardJS from "clipboard";
+import { toHHMMSS } from "@/util/index";
 
 export default Vue.extend({
   name: "searchButton",
@@ -106,12 +107,40 @@ export default Vue.extend({
     //(this as any).videoId = getParam("v");
   },
   computed: {
+    videoId(): string {
+      return this.$store.getters["video/getVideoId"];
+    },
+    start(): string {
+      return toHHMMSS(this.$store.getters["video/getStartTime"]);
+    },
+    //end(): number {
+    //  return this.$store.getters["video/getEndTime"];
+    //},
+    end(): string {
+      return toHHMMSS(this.$store.getters["video/getEndTime"]);
+      //const end = this.$store.getters["video/getEndTime"];
+      //if (end) {
+      //  return end;
+      //} else {
+      //  return this.player.getDuration();
+      //}
+    },
+    word(): string {
+      return this.$store.getters["video/getWordTime"];
+    },
+    player(): any {
+      return this.$store.getters["video/getPlayer"];
+    }
+    //shareLinkUrl() {
+    //  return `https://l-youtube.com/watch?v=${this.videoId}&s=${this.start}&e=${this.end}`;
+    //}
+  },
   methods: {
     onClick() {
       const clipboard = new ClipboardJS("#copy-button");
     },
     shareLinkUrl() {
-      return `https://l-youtube.com/watch?v=xxx`;
+      return `https://l-youtube.com/watch?v=${this.videoId}&s=${this.start}&e=${this.end}`;
     }
   }
 });

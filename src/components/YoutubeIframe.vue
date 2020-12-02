@@ -91,6 +91,7 @@ export default Vue.extend({
                   start: this.start,
                   end: resultEnd,
                   //end: this.endPlus1,
+                  color: "white",
                   playsinline: 1,
                   loop: 1, // ループの設定
                   playlist: this.videoId // 再生する動画のリスト

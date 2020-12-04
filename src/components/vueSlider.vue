@@ -7,6 +7,7 @@
     :max="end"
     :interval="interval"
     :tooltip="'always'"
+    type="MinRange"
     :process="process"
     :tooltip-formatter="Tformatter"
   >
@@ -40,19 +41,19 @@ export default Vue.extend({
   //  msg: String
   //},
   created() {
-    console.log("created this.start", this.start);
-    console.log("created this.end", this.end);
-    console.log(
-      "created (this.end - this.start)% interval  ",
-      (this.end - this.start) % this.interval
-    );
+    //console.log("created this.start", this.start);
+    //console.log("created this.end", this.end);
+    //console.log(
+    //  "created (this.end - this.start)% interval  ",
+    //  (this.end - this.start) % this.interval
+    //);
     //this.value = [this.start, this.end];
     //const params = location.pathname.split("/");
     //(this as any).videoId = getParam("v");
   },
   mounted() {
-    console.log("mounted this.start", this.start);
-    console.log("mounted this.end", this.end);
+    //console.log("mounted this.start", this.start);
+    //console.log("mounted this.end", this.end);
   },
   computed: {
     start(): number {
@@ -66,6 +67,6 @@ export default Vue.extend({
 </script>
 <style scoped lang="scss">
 .vue-slider-custom {
-  padding: 10px 190px !important;
+  padding: 10px 19vw !important;
 }
 </style>

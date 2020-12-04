@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="videowrapper">
     <div id="player2" />
     <vueSlider />
   </div>
@@ -31,6 +31,7 @@ export default Vue.extend({
     return {
       title: "Loop Youtube",
       timeupdater: Object,
+      player3: Object,
       //description: "sdsdsdsdsd",
       //videoId: "",
       //word: "",
@@ -49,7 +50,6 @@ export default Vue.extend({
     };
   },
   created() {
-    console.log("xxx videoId:", this.videoId);
     this.player2();
     //const params = location.pathname.split("/");
     //(this as any).videoId = getParam("v");
@@ -60,16 +60,27 @@ export default Vue.extend({
       YouTubeIframeLoader.load((YT: any) => {
         const player = new YT.Player("player2", {
           //startSeconds: '1999',
-          //height: '390',
-          //width: '640',
+          //height: "100vh",
+          //width: "100vw",
+          //width: (this as any).getIframe().parentElement.offsetWidth,
           videoId: this.videoId,
           //videoId: "Vw-tayLQLuQ",
           events: {
             onReady: () => {
+              (this as any).player3 = player;
+              this.onResize();
+              window.addEventListener("resize", this.onResize);
+              //window.addEventListener("resize", resize(player));
+              //player.setSize(player.getIframe().parentElement.offsetWidth, 340);
+              //console.log(
+              //  "player.getIframe().parentElement.offsetWidth",
+              //  player.getIframe().parentElement.offsetWidth
+              //);
+
+              //const player.getIframe();
               this.$store.commit(`video/${SET_PLAYER}`, player);
               let resultEnd;
               if (this.end) {
-                console.log("this.end!", this.end);
                 resultEnd = this.endPlus1;
                 this.$store.commit(`video/${SET_END_TIME}`, this.end);
               } else {
@@ -79,10 +90,11 @@ export default Vue.extend({
               }
 
               //this.$store.commit(`video/${SET_PLAYER}`, this.player);
-              (this as any).player3 = player;
+
               this.playingTime = this.start;
               (this as any).player3.loadVideoById({
                 videoId: this.videoId,
+                width: player.getIframe().parentElement.offsetWidth,
                 //videoId: "Vw-tayLQLuQ",
                 startSeconds: this.start || 0,
                 //endSeconds: this.endPlus1 || player.getDuration(),
@@ -134,6 +146,15 @@ export default Vue.extend({
         });
       });
     },
+    onResize() {
+      const p = (this as any).player3;
+      const width = p.getIframe().parentElement.offsetWidth;
+      const width100 = width / 100;
+      //p.getIframe().parentElement.offsetWidth
+
+      p.setSize(width100 * 80, 480);
+    },
+    //onResize2() {},
     clearTimeInterval() {
       clearInterval((this as any).timeupdater);
     },
@@ -162,12 +183,12 @@ export default Vue.extend({
     //ended() {
     //  this.seekTo();
     //},
-    error(e: any) {
-      //console.log("error", e);
-    },
-    onPlayerStateChange(YT, evt) {
-      console.log("onPlayerStateChange evt", evt);
-    },
+    //error(e: any) {
+    //  //console.log("error", e);
+    //},
+    //onPlayerStateChange(YT, evt) {
+    //  //console.log("onPlayerStateChange evt", evt);
+    //},
     //isParams(): boolean {
     //  return !!this.videoId && !!this.start && !!this.end;
     //},
@@ -175,17 +196,19 @@ export default Vue.extend({
       this.player.playVideo();
     },
     playing(): void {
-      console.log("playing");
       //setTimeout(this.seekTo, this.loopTrigerMilliSecond);
     },
     ended() {
-      console.log("ended");
       //this.seekTo();
     }
     //seekTo(): void {
     //  console.warn("seekTo");
     //  this.player.seekTo(this.start);
     //}
+  },
+  mounted() {
+    //const ii = (this as any).player3.getIframe();
+    //console.log("mounted ii::", ii);
   },
   computed: {
     endPlus1(): number {
@@ -208,7 +231,7 @@ export default Vue.extend({
     playerVars(): any {
       return {
         //controls: 0,
-        player3: Object,
+        //player3: Object,
         rel: 0,
         autoplay: 1,
         enablejsapi: 1,
@@ -247,3 +270,36 @@ export default Vue.extend({
   }
 });
 </script>
+<style scoped lang="scss">
+//.videowrapper {
+//  float: none;
+//  clear: both;
+//  width: 100%;
+//  position: relative;
+//  padding-bottom: 56.25%;
+//  padding-top: 25px;
+//  height: 0;
+//}
+//.videowrapper iframe {
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  width: 100%;
+//  height: 100%;
+//}
+//.videowrapper {
+//  width: 100vw;
+//  height: 100vh;
+//}
+
+#player2 {
+  width: 100vw;
+  height: 100vh;
+}
+.videowrapper222 {
+  //padding: 50px;
+  display: block;
+  width: 70%;
+  text-align: center;
+}
+</style>

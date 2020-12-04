@@ -1,7 +1,47 @@
 <template>
   <div class="generate-url">
+    <h1 class="title">
+      Loop Youtube
+    </h1>
+    <h2 class="subtitle">
+      Paste a Youtube URL you want to loop below and click "Search button"
+    </h2>
+    <div class="search-group">
+      <div class="search-form-group">
+        <input
+          v-model="searchFormText"
+          class="search-form"
+          type="text"
+          placeholder="https://www.youtube.com/watch?v=9bZkp7q19f0"
+        />
 
-    <section class="hero">
+        <span
+          v-if="validationErrorStatus"
+          class="help-block error"
+          style="margin-top: 5px;color: red"
+        >Please enter a valid Youtube URL.</span>
+      </div>
+      <button
+        @click="onClick"
+        class="button search-button"
+      >Search</button>
+    </div>
+    <br>
+    <br>
+    <template v-if="loadingStatus">
+      <div class="line" />
+      <loading />
+    </template>
+    <template v-else-if="!loadingStatus && showVideoStatus">
+
+      <div class="edit-youtube-group">
+
+        <YoutubeIframe />
+
+      </div>
+      <LinkShare />
+    </template>
+    <!-- <section class="hero">
 
       <div class="hero-body">
         <div class="container">
@@ -41,7 +81,7 @@
             <loading />
           </template>
           <template v-else-if="!loadingStatus && showVideoStatus">
-            <!-- <div class="line" /> -->
+
             <div class="edit-youtube-group">
 
               <YoutubeIframe />
@@ -50,38 +90,10 @@
             <LinkShare />
           </template>
 
-          <!-- <div class="line" /> -->
-          <!-- <h2 class="subtitle">
-            Hero subtitle
-          </h2> -->
-
         </div>
 
       </div>
-    </section>
-    <!-- <h1>{{ msg }}</h1> -->
-
-    <!--
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a
-        href="https://cli.vuejs.org"
-        target="_blank"
-        rel="noopener"
-      >vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-
-    <h3>Ecosystem</h3>
-    <input
-      type="button"
-      value="Link Share"
-    >
-    <h3>Installed CLI Plugins</h3>
-
-    <h3>Ecosystem</h3>
-    -->
+    </section> -->
 
   </div>
 </template>
@@ -89,8 +101,6 @@
 <script lang="ts">
 import Vue from "vue";
 import loading from "@/components/loading.vue";
-//import vueSlider from "@/components/vueSlider.vue";
-//import navLink from "@/components/navLink.vue";
 import LinkShare from "@/components/LinkShare.vue";
 import YoutubeIframe from "@/components/YoutubeIframe.vue";
 import getYouTubeID from "get-youtube-id";
@@ -125,7 +135,6 @@ export default Vue.extend({
   },
   methods: {
     onClick() {
-      //console.log("onClick searchFormText", getYouTubeID(this.searchFormText));
       const videoId = getYouTubeID(this.searchFormText);
       if (videoId) {
         this.validationErrorStatus = false;
@@ -136,13 +145,12 @@ export default Vue.extend({
         //showVideo();
         setTimeout(function() {
           showVideo();
-        }, 1000);
+        }, 300);
       } else {
         this.validationErrorStatus = true;
       }
     },
     showVideo() {
-      console.log("showVideo");
       this.showVideoStatus = true;
       this.loadingStatus = false;
     }
@@ -194,9 +202,19 @@ a {
   flex-direction: column;
   flex-wrap: wrap;
 }
+
+.search-form-group input {
+  @media screen and (max-width: 479px) {
+    font-size: 15px;
+  }
+}
 .search-form {
-  width: 530px;
+  width: 41vw;
   background: rgba(255, 255, 255, 0.5);
+
+  @media screen and (max-width: 479px) {
+    width: 90vw;
+  }
 }
 .search-button:focus {
   outline: none;
@@ -207,6 +225,7 @@ a {
 
   @media screen and (max-width: 479px) {
     align-items: center;
+    margin-top: 1rem;
     margin-left: 0px;
   }
   padding: 0px 40px 0px 40px;

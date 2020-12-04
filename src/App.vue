@@ -2,32 +2,30 @@
   <div id="app">
     <navLink />
     <div class="line" />
-    <!-- <h1>ver14</h1> -->
-    <!-- <div id="player" /> -->
     <div v-if="isParams">
       <h1 class="itc-kabel">{{this.description}}</h1>
-      <!-- <div id="player2" /> -->
       <YoutubeIframe />
       <LinkShare />
-      <!-- <youtube
-          :video-id="videoId"
-          :player-vars="playerVars"
-          @ready="ready"
-          @playing="playing"
-          @ended="ended"
-          @error="error"
-          ref="youtube"
-        /> -->
     </div>
     <div v-else>
       <GenerateUrl />
 
     </div>
+    <!--
+    <navLink />
+    
 
-    <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
+    <div v-if="isParams">
+      <h1 class="itc-kabel">{{this.description}}</h1>
 
-    <!-- <router-view /> -->
+      <YoutubeIframe />
+      <LinkShare />
+    </div>
+    <div v-else>
+      <GenerateUrl />
+
+    </div>-->
+
   </div>
 </template>
 <script lang="ts">
@@ -55,7 +53,6 @@ export default Vue.extend({
     navLink,
     LinkShare,
     YoutubeIframe
-    //VueYoutube
   },
   data() {
     return {
@@ -142,7 +139,6 @@ export default Vue.extend({
     this.$store.commit(`video/${SET_START_TIME}`, this.start);
 
     this.end = toSecond(getParam("e"));
-    console.log("xxxxxxxxxxSET_END_TIME ", this.end);
     this.$store.commit(`video/${SET_END_TIME}`, this.end);
 
     this.word = getParam("w");
@@ -282,13 +278,9 @@ export default Vue.extend({
     },
     ended() {
       this.seekTo();
-    },
-    error(e: any) {
-      //console.log("error", e);
-    },
-    onPlayerStateChange(YT, evt) {
-      console.log("onPlayerStateChange evt", evt);
     }
+    //error(e: any) {},
+    //onPlayerStateChange(YT, evt) {}
   }
 });
 </script>
@@ -305,10 +297,11 @@ export default Vue.extend({
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  //overflow: hidden;
   text-align: center;
   color: #fff;
-  width: 100%;
+  //width: 100%;
+  //width: 100vw;
 }
 
 #nav a {

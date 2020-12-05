@@ -294,7 +294,7 @@ export default Vue.extend({
 
 #player2 {
   width: 100vw;
-  height: 100vh;
+  //height: 100vh;
 }
 .videowrapper222 {
   //padding: 50px;

@@ -291,7 +291,11 @@ export default Vue.extend({
 .line {
   border-bottom: 2px solid #fff;
 }
+body {
+  margin: 0px;
+}
 #app {
+  background-image: url("~@/assets/background.jpg");
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial,
     sans-serif;
@@ -301,7 +305,9 @@ export default Vue.extend({
   text-align: center;
   color: #fff;
   //width: 100%;
-  //width: 100vw;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
 }
 
 #nav a {

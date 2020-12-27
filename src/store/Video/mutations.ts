@@ -7,6 +7,7 @@ export const SET_PLAYER = "setPlayer";
 export const SET_VIDEO_ID = "setVideoId";
 export const SET_START_TIME = "setStartTime";
 export const SET_END_TIME = "setEndTime";
+export const SET_DURATION = "setDuration";
 export const SET_WORD = "setWord";
 export const SET_SHOW_VIDEO_STATUS = "setShowVideoStatus";
 export const SET_LOADING_STATUS = "setLoadingStatus";
@@ -30,6 +31,10 @@ const mutations: MutationTree<VideoState> = {
   setEndTime: (state, endTime) => {
     //state.endTime = toHHMMSS(endTime);
     state.endTime = endTime;
+  },
+  setDuration: (state, duration) => {
+    //state.endTime = toHHMMSS(endTime);
+    state.duration = duration;
   },
   setWord: (state, word) => {
     //state.endTime = toHHMMSS(endTime);

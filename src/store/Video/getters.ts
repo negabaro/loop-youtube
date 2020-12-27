@@ -11,6 +11,9 @@ const getters: GetterTree<VideoState, RootState> = {
   getEndTime: state => {
     return state.endTime;
   },
+  getDuration: state => {
+    return state.duration;
+  },
   getWord: state => {
     return state.word;
   },

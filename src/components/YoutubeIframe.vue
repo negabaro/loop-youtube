@@ -1,7 +1,7 @@
 <template>
   <div class="videowrapper">
     <div id="player2" />
-    <vueSlider />
+    <vueSlider v-if="vueSliderStatus" />
   </div>
 </template>
 
@@ -12,7 +12,9 @@ import vueSlider from "@/components/vueSlider.vue";
 import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import {
   SET_PLAYER,
-  SET_END_TIME
+  SET_VIDEO_ID,
+  SET_END_TIME,
+  SET_DURATION
   //SET_START_TIME,
 } from "@/store/Video/mutations";
 //import { toSecond, toHHMMSS, getParam } from "@/util/index";
@@ -30,6 +32,7 @@ export default Vue.extend({
   data() {
     return {
       title: "Loop Youtube",
+      vueSliderStatus: false,
       timeupdater: Object,
       callbackId: Object,
       cancelStatus: false,
@@ -80,15 +83,21 @@ export default Vue.extend({
               //);
 
               //const player.getIframe();
+              this.$store.commit(`video/${SET_VIDEO_ID}`, this.videoId);
               this.$store.commit(`video/${SET_PLAYER}`, player);
+              this.$store.commit(`video/${SET_DURATION}`, player.getDuration());
               let resultEnd;
               if (this.end) {
                 resultEnd = this.endPlus1;
+                //console.log("if true", this.end);
                 this.$store.commit(`video/${SET_END_TIME}`, this.end);
+                this.vueSliderStatus = true;
               } else {
                 resultEnd = player.getDuration() - 1;
+                //console.log("if false", resultEnd);
                 //console.log("player.getDuration()!", player.getDuration());
                 this.$store.commit(`video/${SET_END_TIME}`, resultEnd);
+                this.vueSliderStatus = true;
               }
 
               //this.$store.commit(`video/${SET_PLAYER}`, this.player);
@@ -173,7 +182,7 @@ export default Vue.extend({
       cancelAnimationFrame((this as any).callbackId);
     },
     updateTime(timeStamp) {
-      console.log("updateTime");
+      //console.log("updateTime");
       const player = (this as any).player3;
       const oldTime = this.videotime;
       if (player && player.getCurrentTime) {

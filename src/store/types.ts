@@ -1,6 +1,7 @@
 export interface VideoState {
   startTime: Number;
   endTime: Number;
+  duration: Number;
   videoId: String;
   word: String;
   player: Object;

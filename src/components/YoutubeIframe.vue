@@ -31,6 +31,8 @@ export default Vue.extend({
     return {
       title: "Loop Youtube",
       timeupdater: Object,
+      callbackId: Object,
+      cancelStatus: false,
       player3: Object,
       //description: "sdsdsdsdsd",
       //videoId: "",
@@ -132,14 +134,22 @@ export default Vue.extend({
               // }
               //let timeupdater;
               if (e.data == YT.PlayerState.ENDED) {
-                this.clearTimeInterval();
+                //this.clearTimeInterval();
+                this.cancelStatus = true;
+                this.cancelAnimationFrame();
               } else if (e.data == YT.PlayerState.PLAYING) {
+                this.cancelStatus = false;
                 const updateTime = this.updateTime;
-                (this as any).timeupdater = setInterval(function() {
-                  updateTime();
-                }, 1000);
+                requestAnimationFrame(updateTime);
+
+                //(this as any).timeupdater = setInterval(function() {
+                //  updateTime();
+                //  console.log("updateTime!!!");
+                //}, 1000);
               } else if (e.data == YT.PlayerState.PAUSED) {
-                this.clearTimeInterval();
+                this.cancelStatus = true;
+                //this.clearTimeInterval();
+                this.cancelAnimationFrame();
               }
             }
           }
@@ -158,7 +168,12 @@ export default Vue.extend({
     clearTimeInterval() {
       clearInterval((this as any).timeupdater);
     },
-    updateTime() {
+    cancelAnimationFrame() {
+      //console.log("cancelAnimationFrame", (this as any).callbackId);
+      cancelAnimationFrame((this as any).callbackId);
+    },
+    updateTime(timeStamp) {
+      console.log("updateTime");
       const player = (this as any).player3;
       const oldTime = this.videotime;
       if (player && player.getCurrentTime) {
@@ -167,11 +182,15 @@ export default Vue.extend({
       if (this.videotime !== oldTime) {
         this.onProgress(this.videotime);
       }
+      if (!this.cancelStatus) {
+        (this as any).callbackId = requestAnimationFrame(this.updateTime);
+      }
     },
     onProgress(currentTime) {
       if (Math.floor(currentTime) == this.end) {
         this.seekTo();
-        this.clearTimeInterval();
+        //this.clearTimeInterval();
+        this.cancelAnimationFrame();
       }
     },
     playVideo() {

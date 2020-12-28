@@ -22,7 +22,7 @@ paste url you want to loop Youtube Video and click the search button.
 
 specifiy the time with slider.
 
-[![Image from Gyazo](https://i.gyazo.com/0161aee2c0d70e9c53fd00f3dec6a51e.gif)](https://gyazo.com/0161aee2c0d70e9c53fd00f3dec6a51e)
+![0161aee2c0d70e9c53fd00f3dec6a51e](https://user-images.githubusercontent.com/4640346/103184979-bbd29d00-48fd-11eb-92de-4dcde731766e.gif)
 
 ### 2.
 

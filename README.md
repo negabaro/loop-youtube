@@ -8,6 +8,21 @@ loop-youtube could repeat Youtube Video for a specific time you want to loop.
 
 ## How to Use
 
+There are two ways to use this.
+
+### 1.
+
+access [l-youtube]
+↓
+paste url you want to loop Youtube Video.
+↓
+specifiy the time with slider.
+
+
+[l-youtube]: https://l-youtube.com
+
+### 2.
+
 
 
 ## params

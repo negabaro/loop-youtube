@@ -2,7 +2,7 @@
 
 # loop-youtube
 
-loop-youtube could repeat Youtube Video for a specific time you want to loop.
+[loop-youtube] could repeat Youtube Video for a specific time you want to loop.
 
 
 
@@ -13,13 +13,17 @@ There are two ways to use this.
 ### 1.
 
 access [l-youtube]
+
 ↓
+
 paste url you want to loop Youtube Video.
+
 ↓
+
 specifiy the time with slider.
 
 
-[l-youtube]: https://l-youtube.com
+
 
 ### 2.
 
@@ -29,16 +33,16 @@ specifiy the time with slider.
 
 |name|Description|example|
 |:---|:---|:---|
-|v|youtube videoID to play|v=xxxx|
+|watch|youtube videoID to play|watch=xxxx|
 |s|Time to start repeating |s=00:20|
 |e|Time to end repeating|e=00:25|
 
 
 ## example
 
-https://loop-youtube.netlify.app/?v=gDLH9hs_Qk4&s=00:45&e=00:55
+https://l-youtube.com/?watch=gDLH9hs_Qk4&s=00:45&e=00:55
 
-https://loop-youtube.netlify.app/?v=lLaRC7GkVR8&s=01:51&e=01:52
+https://l-youtube.com/?v=lLaRC7GkVR8&s=01:51&e=01:52
 
 ---
 
@@ -51,3 +55,5 @@ cd loop-youtube
 yarn install
 yarn serve
 ```
+
+[loop-youtube]: https://l-youtube.com

@@ -8,23 +8,21 @@
 
 ## How to Use
 
-There are two ways to use this.
-
-### 1.
-
 access [loop-youtube]
 
 ↓
 
-paste url you want to loop Youtube Video and click the search button.
+paste url you want to loop Youtube Video and click "Search button"
 
 ↓
 
-specifiy the time with slider.
+specifiy the time with slider
+
+↓
+
+Click "Copy Link Button" and Let's share to someone this link.
 
 ![0161aee2c0d70e9c53fd00f3dec6a51e](https://user-images.githubusercontent.com/4640346/103184979-bbd29d00-48fd-11eb-92de-4dcde731766e.gif)
-
-### 2.
 
 
 

@@ -46,6 +46,9 @@ https://l-youtube.com/?v=lLaRC7GkVR8&s=01:51&e=01:52
 
 ## How to Install
 
+[loop-youtube] is OSS. 
+You could run it on localhost by following the steps below.
+
 ```
 git clone https://github.com/negabaro/loop-youtube
 cd loop-youtube

@@ -12,17 +12,17 @@ There are two ways to use this.
 
 ### 1.
 
-access [l-youtube]
+access [loop-youtube]
 
 ↓
 
-paste url you want to loop Youtube Video.
+paste url you want to loop Youtube Video and click the search button.
 
 ↓
 
 specifiy the time with slider.
 
-
+[![Image from Gyazo](https://i.gyazo.com/9660d93487994960514637af6c0c68b9.gif)](https://gyazo.com/9660d93487994960514637af6c0c68b9)
 
 
 ### 2.

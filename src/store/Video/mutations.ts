@@ -11,6 +11,7 @@ export const SET_DURATION = "setDuration";
 export const SET_WORD = "setWord";
 export const SET_SHOW_VIDEO_STATUS = "setShowVideoStatus";
 export const SET_LOADING_STATUS = "setLoadingStatus";
+export const SET_FULL_MODE = "setFullMode";
 //export const SET_DURATION = "setDuration";
 //export const SET_LOOP_COUNT = "setLoopCount";
 
@@ -20,7 +21,9 @@ const mutations: MutationTree<VideoState> = {
   //},
   setVideoId: (state, videoId) => {
     state.videoId = videoId;
-    //console.log("state.items", state.items);
+  },
+  setFullMode: (state, fullMode) => {
+    state.fullMode = fullMode;
   },
   setStartTime: (state, startTime) => {
     //state.startTime = toHHMMSS(startTime);

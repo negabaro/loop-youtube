@@ -6,6 +6,7 @@ import mutations from "@/store/Video/mutations";
 
 const state: VideoState = {
   startTime: 0,
+  fullMode: false,
   endTime: 0,
   duration: 0,
   videoId: "",

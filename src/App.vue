@@ -32,6 +32,7 @@ import {
   SET_VIDEO_ID,
   SET_START_TIME,
   SET_END_TIME,
+  SET_FULL_MODE,
   SET_WORD
 } from "@/store/Video/mutations";
 Vue.use(VueYoutube);
@@ -124,6 +125,8 @@ export default Vue.extend({
   created() {
     //console.log("location", location.pathname);
     this.pathName = location.pathname;
+    this.$store.commit(`video/${SET_FULL_MODE}`, this.isPathNameEmbed);
+
     this.videoId = getParam("v");
     this.$store.commit(`video/${SET_VIDEO_ID}`, this.videoId);
 

@@ -1,7 +1,7 @@
 <template>
   <div class="videowrapper">
     <div id="player2" />
-    <vueSlider v-if="vueSliderStatus" />
+    <vueSlider v-if="vueSliderStatus && !fullMode" />
   </div>
 </template>
 
@@ -168,10 +168,18 @@ export default Vue.extend({
     onResize() {
       const p = (this as any).player3;
       const width = p.getIframe().parentElement.offsetWidth;
+      const height = window.outerHeight - 45;
       const width100 = width / 100;
       //p.getIframe().parentElement.offsetWidth
 
-      p.setSize(width100 * 80, 480);
+      //
+      if (this.fullMode) {
+        p.setSize(width, height);
+      } else {
+        p.setSize(width100 * 80, 480);
+      }
+
+      //p.setSize(width);
     },
     //onResize2() {},
     clearTimeInterval() {
@@ -282,6 +290,9 @@ export default Vue.extend({
     },
     videoId(): string {
       return this.$store.getters["video/getVideoId"];
+    },
+    fullMode(): string {
+      return this.$store.getters["video/getFullMode"];
     },
     start(): number {
       return this.$store.getters["video/getStartTime"];

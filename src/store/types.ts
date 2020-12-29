@@ -5,6 +5,7 @@ export interface VideoState {
   videoId: String;
   word: String;
   player: Object;
+  fullMode: boolean;
   loadingStatus: boolean;
   showVideoStatus: boolean;
 }

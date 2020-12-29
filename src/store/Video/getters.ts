@@ -5,6 +5,9 @@ const getters: GetterTree<VideoState, RootState> = {
   getVideoId: state => {
     return state.videoId;
   },
+  getFullMode: state => {
+    return state.fullMode;
+  },
   getStartTime: state => {
     return state.startTime;
   },

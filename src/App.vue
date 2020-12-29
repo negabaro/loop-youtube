@@ -3,29 +3,18 @@
     <navLink />
     <div class="line" />
     <div v-if="isParams">
-      <h1 class="itc-kabel">{{this.description}}</h1>
-      <YoutubeIframe />
-      <LinkShare />
+      <template v-if="isPathNameEmbed">
+        <YoutubeIframe />
+      </template>
+      <template v-else>
+        <h1 class="itc-kabel">{{this.description}}</h1>
+        <YoutubeIframe />
+        <LinkShare />
+      </template>
     </div>
     <div v-else>
       <GenerateUrl />
-
     </div>
-    <!--
-    <navLink />
-    
-
-    <div v-if="isParams">
-      <h1 class="itc-kabel">{{this.description}}</h1>
-
-      <YoutubeIframe />
-      <LinkShare />
-    </div>
-    <div v-else>
-      <GenerateUrl />
-
-    </div>-->
-
   </div>
 </template>
 <script lang="ts">
@@ -56,6 +45,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      pathName: "",
       title: "Loop Youtube",
       timeupdater: Object,
       //description: "sdsdsdsdsd",
@@ -132,6 +122,8 @@ export default Vue.extend({
   },
   //https://loop-youtube.netlify.app/?v=WIUH0lhsbL0&s=00:20&e=00:30
   created() {
+    //console.log("location", location.pathname);
+    this.pathName = location.pathname;
     this.videoId = getParam("v");
     this.$store.commit(`video/${SET_VIDEO_ID}`, this.videoId);
 
@@ -143,11 +135,10 @@ export default Vue.extend({
 
     this.word = getParam("w");
     this.$store.commit(`video/${SET_WORD}`, this.word);
-    //this.player2();
   },
   computed: {
-    endPlus1(): number {
-      return this.end + 1;
+    isPathNameEmbed(): boolean {
+      return this.pathName === "/embed" ? true : false;
     },
     metaTitle(): string {
       return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
@@ -182,106 +173,9 @@ export default Vue.extend({
     },
     isParams(): boolean {
       return !!this.videoId && !!this.start && !!this.end;
-    },
-    player(): any {
-      const youtube: any = this.$refs.youtube;
-      return youtube.player;
     }
   },
-  methods: {
-    player2() {
-      YouTubeIframeLoader.load((YT: any) => {
-        const player = new YT.Player("player2", {
-          //startSeconds: '1999',
-          //height: '390',
-          //width: '640',
-          videoId: this.videoId,
-          //videoId: "Vw-tayLQLuQ",
-          events: {
-            onReady: () => {
-              (this as any).player3 = player;
-              this.playingTime = this.start;
-              (this as any).player3.loadVideoById({
-                videoId: this.videoId,
-                //videoId: "Vw-tayLQLuQ",
-                startSeconds: this.start || 0,
-                endSeconds: this.endPlus1 || player.getDuration(),
-                playerVars: {
-                  start: this.start,
-                  end: this.endPlus1,
-                  playsinline: 1,
-                  loop: 1, // ループの設定
-                  playlist: this.videoId // 再生する動画のリスト
-                }
-                //startSeconds: hmsToSecondsOnly(this.props.start_time) || 0,
-                //endSeconds: hmsToSecondsOnly(this.props.end_time) || 100
-              });
-            },
-            onStateChange: e => {
-              //switch(e.data){
-              //    case YT.PlayerState.ENDED:
-              //       s+=" / YT.PlayerState.ENDED";
-              //       break;
-              //    case YT.PlayerState.PLAYING:
-              //       s+=" / YT.PlayerState.PLAYING";
-              //       break;
-              //    case YT.PlayerState.PAUSED:
-              //       s+=" / YT.PlayerState.PAUSED";
-              //       break;
-              //    case YT.PlayerState.BUFFERING:
-              //       s+=" / YT.PlayerState.BUFFERING";
-              //       break;
-              //    case YT.PlayerState.CUED:
-              //       s+=" / YT.PlayerState.CUED";
-              //       break;
-              // }
-              //let timeupdater;
-              if (e.data == YT.PlayerState.ENDED) {
-                this.clearTimeInterval();
-              } else if (e.data == YT.PlayerState.PLAYING) {
-                const updateTime = this.updateTime;
-                (this as any).timeupdater = setInterval(function() {
-                  updateTime();
-                }, 1000);
-              } else if (e.data == YT.PlayerState.PAUSED) {
-                this.clearTimeInterval();
-              }
-            }
-          }
-        });
-      });
-    },
-    clearTimeInterval() {
-      clearInterval((this as any).timeupdater);
-    },
-    updateTime() {
-      const player = (this as any).player3;
-      const oldTime = this.videotime;
-      if (player && player.getCurrentTime) {
-        this.videotime = player.getCurrentTime();
-      }
-      if (this.videotime !== oldTime) {
-        this.onProgress(this.videotime);
-      }
-    },
-    onProgress(currentTime) {
-      if (Math.floor(currentTime) == this.end) {
-        this.seekTo();
-        this.clearTimeInterval();
-      }
-    },
-    playVideo() {
-      this.player.playVideo();
-    },
-    seekTo(): void {
-      (this as any).player3.seekTo(this.start);
-    },
-    ended() {
-      this.seekTo();
-    }
-    //error(e: any) {},
-    //onPlayerStateChange(YT, evt) {}
-  }
+  methods: {}
 });
 </script>
 <style lang="scss">

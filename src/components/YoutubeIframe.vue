@@ -341,4 +341,20 @@ export default Vue.extend({
   width: 70%;
   text-align: center;
 }
+.videowrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  //padding-bottom: 56.25%;
+  overflow: hidden;
+  //margin-bottom: 50px;
+}
+
+.videowrapper iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>

@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <navLink />
-    <div class="line" />
+
     <div v-if="isParams">
       <template v-if="isPathNameEmbed">
-        <YoutubeIframe />
+        <YoutubeEmbed />
       </template>
       <template v-else>
+        <navLink />
+        <div class="line" />
         <h1 class="itc-kabel">{{this.description}}</h1>
         <YoutubeIframe />
         <LinkShare />
       </template>
     </div>
     <div v-else>
+      <navLink />
+      <div class="line" />
       <GenerateUrl />
     </div>
   </div>
@@ -26,6 +29,7 @@ import GenerateUrl from "@/components/GenerateUrl.vue";
 import navLink from "@/components/navLink.vue";
 import LinkShare from "@/components/LinkShare.vue";
 import YoutubeIframe from "@/components/YoutubeIframe.vue";
+import YoutubeEmbed from "@/components/YoutubeEmbed.vue";
 //const YouTubeIframeLoader = require("youtube-iframe");
 import YouTubeIframeLoader from "youtube-iframe";
 import {
@@ -42,7 +46,8 @@ export default Vue.extend({
     GenerateUrl,
     navLink,
     LinkShare,
-    YoutubeIframe
+    YoutubeIframe,
+    YoutubeEmbed
   },
   data() {
     return {
@@ -192,7 +197,15 @@ html {
   background-image: url("~@/assets/background.jpg");
 }
 body {
-  margin: 0px;
+  font: 12px Roboto, Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  margin: 0;
+  padding: 0;
 }
 #app {
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen,
@@ -206,6 +219,7 @@ body {
   //width: 100%;
   margin: 0;
   width: 100%;
+  height: 100%;
   //height: 100vh;
 }
 

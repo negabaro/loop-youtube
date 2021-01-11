@@ -5,6 +5,9 @@
       <template v-if="isPathNameEmbed">
         <YoutubeEmbed />
       </template>
+      <template v-else-if="isPathNameVy">
+        <VueYoutube />
+      </template>
       <template v-else>
         <navLink />
         <div class="line" />
@@ -22,7 +25,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import VueYoutube from "vue-youtube";
+//import VueYoutube from "vue-youtube";
 import { toSecond, toHHMMSS, getParam } from "@/util/index";
 import VueHead from "vue-head";
 import GenerateUrl from "@/components/GenerateUrl.vue";
@@ -30,6 +33,7 @@ import navLink from "@/components/navLink.vue";
 import LinkShare from "@/components/LinkShare.vue";
 import YoutubeIframe from "@/components/YoutubeIframe.vue";
 import YoutubeEmbed from "@/components/YoutubeEmbed.vue";
+import VueYoutube from "@/components/VueYoutube.vue";
 //const YouTubeIframeLoader = require("youtube-iframe");
 import YouTubeIframeLoader from "youtube-iframe";
 import {
@@ -39,7 +43,7 @@ import {
   SET_FULL_MODE,
   SET_WORD
 } from "@/store/Video/mutations";
-Vue.use(VueYoutube);
+//Vue.use(VueYoutube);
 Vue.use(VueHead);
 export default Vue.extend({
   components: {
@@ -47,7 +51,8 @@ export default Vue.extend({
     navLink,
     LinkShare,
     YoutubeIframe,
-    YoutubeEmbed
+    YoutubeEmbed,
+    VueYoutube
   },
   data() {
     return {
@@ -148,8 +153,15 @@ export default Vue.extend({
     isPathNameEmbed(): boolean {
       return this.pathName === "/embed" ? true : false;
     },
+    isPathNameVy(): boolean {
+      return this.pathName === "/vy" ? true : false;
+    },
     metaTitle(): string {
-      return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
+      if ((!!this.start || this.start == 0) && !!this.end) {
+        return `${this.title} | ${toHHMMSS(this.start)}~${toHHMMSS(this.end)}`;
+      } else {
+        return `${this.title}`;
+      }
     },
     decodedWord(): string {
       return decodeURIComponent(this.word);
@@ -180,7 +192,7 @@ export default Vue.extend({
       };
     },
     isParams(): boolean {
-      return !!this.videoId && !!this.start && !!this.end;
+      return !!this.videoId && (!!this.start || this.start == 0) && !!this.end;
     }
   },
   methods: {}
@@ -197,15 +209,15 @@ html {
   background-image: url("~@/assets/background.jpg");
 }
 body {
-  font: 12px Roboto, Arial, sans-serif;
-  background-color: #000;
-  color: #fff;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  position: absolute;
+  //font: 12px Roboto, Arial, sans-serif;
+  //background-color: #000;
+  //color: #fff;
+  //height: 100%;
+  //width: 100%;
+  //overflow: hidden;
+  //position: absolute;
+  //padding: 0;
   margin: 0;
-  padding: 0;
 }
 #app {
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen,

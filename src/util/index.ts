@@ -28,7 +28,7 @@ export const getParam = sname => {
     }
   }
 
-  return sval;
+  return decodeURIComponent(sval);
 };
 
 export const toHHMMSS = (sec: any): string => {

@@ -179,7 +179,10 @@ export default Vue.extend({
       const clipboard = new ClipboardJS("#copy-button");
     },
     shareLinkUrl() {
-      return `https://l-youtube.com/watch?v=${this.videoId}&s=${this.start}&e=${this.end}`;
+      const title: string | null | undefined = "";
+      const pathUrl = `watch?v=${this.videoId}&s=${this.start}&e=${this.end}`;
+      history.pushState(null, title, pathUrl);
+      return `https://l-youtube.com/${pathUrl}`;
     }
   }
 });

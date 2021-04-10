@@ -13,6 +13,7 @@ const state: VideoState = {
   word: "",
   player: Object,
   loadingStatus: false,
+  autoPlayStatus: false,
   showVideoStatus: false
 };
 

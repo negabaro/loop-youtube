@@ -9,6 +9,7 @@ export const SET_START_TIME = "setStartTime";
 export const SET_END_TIME = "setEndTime";
 export const SET_DURATION = "setDuration";
 export const SET_WORD = "setWord";
+export const SET_AUTO_PLAY_STATUS = "setAutoPlayStatus";
 export const SET_SHOW_VIDEO_STATUS = "setShowVideoStatus";
 export const SET_LOADING_STATUS = "setLoadingStatus";
 export const SET_FULL_MODE = "setFullMode";
@@ -48,6 +49,9 @@ const mutations: MutationTree<VideoState> = {
   },
   setShowVideoStatus: (state, showVideoStatus) => {
     state.showVideoStatus = showVideoStatus;
+  },
+  setAutoPlayStatus: (state, autoPlayStatus) => {
+    state.autoPlayStatus = autoPlayStatus;
   },
   setLoadingStatus: (state, loadingStatus) => {
     state.loadingStatus = loadingStatus;

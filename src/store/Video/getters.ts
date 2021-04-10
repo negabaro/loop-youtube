@@ -26,6 +26,9 @@ const getters: GetterTree<VideoState, RootState> = {
   getLoadingStatus: state => {
     return state.loadingStatus;
   },
+  getAutoPlayStatus: state => {
+    return state.autoPlayStatus;
+  },
   getShowVideoStatus: state => {
     return state.showVideoStatus;
   }

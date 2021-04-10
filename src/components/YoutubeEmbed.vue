@@ -102,26 +102,50 @@ export default Vue.extend({
               //this.$store.commit(`video/${SET_PLAYER}`, this.player);
 
               this.playingTime = this.start;
-              (this as any).player3.loadVideoById({
-                videoId: this.videoId,
-                width: player.getIframe().parentElement.offsetWidth,
-                //height: 900,
-                //videoId: "Vw-tayLQLuQ",
-                startSeconds: this.start || 0,
-                //endSeconds: this.endPlus1 || player.getDuration(),
-                endSeconds: resultEnd,
-                playerVars: {
-                  start: this.start,
-                  end: resultEnd,
-                  //end: this.endPlus1,
-                  color: "white",
-                  playsinline: 1,
-                  loop: 1, // ループの設定
-                  playlist: this.videoId // 再生する動画のリスト
-                }
-                //startSeconds: hmsToSecondsOnly(this.props.start_time) || 0,
-                //endSeconds: hmsToSecondsOnly(this.props.end_time) || 100
-              });
+              //console.log("autoPlayStatue!!", !!this.autoPlayStatus);
+              if (this.autoPlayStatus) {
+                (this as any).player3.cueVideoById({
+                  videoId: this.videoId,
+                  width: player.getIframe().parentElement.offsetWidth,
+                  //height: 900,
+                  //videoId: "Vw-tayLQLuQ",
+                  startSeconds: this.start || 0,
+                  //endSeconds: this.endPlus1 || player.getDuration(),
+                  endSeconds: resultEnd,
+                  playerVars: {
+                    start: this.start,
+                    end: resultEnd,
+                    //end: this.endPlus1,
+                    color: "white",
+                    playsinline: 1,
+                    loop: 1, // ループの設定
+                    playlist: this.videoId // 再生する動画のリスト
+                  }
+                  //startSeconds: hmsToSecondsOnly(this.props.start_time) || 0,
+                  //endSeconds: hmsToSecondsOnly(this.props.end_time) || 100
+                });
+              } else {
+                (this as any).player3.loadVideoById({
+                  videoId: this.videoId,
+                  width: player.getIframe().parentElement.offsetWidth,
+                  //height: 900,
+                  //videoId: "Vw-tayLQLuQ",
+                  startSeconds: this.start || 0,
+                  //endSeconds: this.endPlus1 || player.getDuration(),
+                  endSeconds: resultEnd,
+                  playerVars: {
+                    start: this.start,
+                    end: resultEnd,
+                    //end: this.endPlus1,
+                    color: "white",
+                    playsinline: 1,
+                    loop: 1, // ループの設定
+                    playlist: this.videoId // 再生する動画のリスト
+                  }
+                  //startSeconds: hmsToSecondsOnly(this.props.start_time) || 0,
+                  //endSeconds: hmsToSecondsOnly(this.props.end_time) || 100
+                });
+              }
             },
             onStateChange: e => {
               //switch(e.data){
@@ -285,7 +309,8 @@ export default Vue.extend({
         //muted: 1,
         //loop: 1,
         start: this.start,
-        end: this.end
+        end: this.end,
+        autoPlayStatus: this.autoPlayStatus
       };
     },
     isParams(): boolean {
@@ -309,6 +334,9 @@ export default Vue.extend({
     },
     word(): string {
       return this.$store.getters["video/getWordTime"];
+    },
+    autoPlayStatus(): boolean {
+      return this.$store.getters["video/getAutoPlayStatus"];
     },
     loopTrigerMilliSecond(): number {
       return (this.end - this.start) * 1000;

@@ -7,6 +7,7 @@ export interface VideoState {
   player: Object;
   fullMode: boolean;
   loadingStatus: boolean;
+  autoPlayStatus: boolean;
   showVideoStatus: boolean;
 }
 

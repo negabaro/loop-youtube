@@ -41,6 +41,7 @@ import {
   SET_START_TIME,
   SET_END_TIME,
   SET_FULL_MODE,
+  SET_AUTO_PLAY_STATUS,
   SET_WORD
 } from "@/store/Video/mutations";
 //Vue.use(VueYoutube);
@@ -62,6 +63,7 @@ export default Vue.extend({
       //description: "sdsdsdsdsd",
       videoId: "",
       word: "",
+      autoPlay: "",
       playingTime: 0,
       start: 0,
       end: 0,
@@ -148,6 +150,9 @@ export default Vue.extend({
 
     this.word = getParam("w");
     this.$store.commit(`video/${SET_WORD}`, this.word);
+
+    this.autoPlay = getParam("autoplay");
+    this.$store.commit(`video/${SET_AUTO_PLAY_STATUS}`, this.autoPlay);
   },
   computed: {
     isPathNameEmbed(): boolean {
